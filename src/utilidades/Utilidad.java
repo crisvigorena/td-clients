@@ -14,7 +14,7 @@ public class Utilidad {
     public String crearMensaje(String message, String argument) throws IllegalStateException {
 
         // Definir variable de respuesta
-        String answer = "";
+        String answer;
 
         // Crear mensajes del Menú Principal
         String main_menu_1 = "%s%s1. Listar Clientes%s".formatted(new_line, new_line, new_line);
@@ -59,7 +59,11 @@ public class Utilidad {
         String edit_menu_16 = "4.-Los años como Cliente son: %s%s".formatted(argument, new_line);
         String edit_menu_17 = "%sIngrese opción a editar de los datos del cliente: ".formatted(new_line);
         String edit_menu_18 = "%s1.-Ingrese nuevo RUN del Cliente: ".formatted(new_line);
-        String edit_menu_19 = "%sDatos cambiados con éxito.%s".formatted(new_line, new_line);
+        String edit_menu_19 = "%s2.-Ingrese nuevo Nombre del Cliente: ".formatted(new_line);
+        String edit_menu_20 = "%s3.-Ingrese nuevo Apellido del Cliente: ".formatted(new_line);
+        String edit_menu_21 = "%s4.-Ingrese nueva Cantidad de Años como Cliente: ".formatted(new_line);
+        String edit_menu_22 = "%sDatos cambiados con éxito.%s".formatted(new_line, new_line);
+        String edit_menu_23 = "%sHubo un error al intentar cambiar los datos.%s".formatted(new_line, new_line);
 
         // Crear mensajes del Menú Cargar Datos
         String load_menu_1 = "%s---------Cargar Datos-----------%s".formatted(new_line, new_line);
@@ -77,9 +81,9 @@ public class Utilidad {
         String export_menu_2 = "Seleccione el formato a exportar:%s".formatted(new_line);
         String export_menu_3 = "1.-Formato csv%s".formatted(new_line);
         String export_menu_4 = "2.-Formato txt%s".formatted(new_line);
-        String export_menu_5 = main_menu_7;
-        String export_menu_header = "%s%s%s%s%s".formatted(export_menu_1, export_menu_2, export_menu_3, export_menu_4, export_menu_5);
-        String export_menu_6 = edit_menu_6;
+        String export_menu_5 = edit_menu_6;
+        String export_menu_6 = main_menu_7;
+        String export_menu_header = "%s%s%s%s%s%s".formatted(export_menu_1, export_menu_2, export_menu_3, export_menu_4, export_menu_5, export_menu_6);
         String export_menu_7 = "%s---------Exportar Datos-----------%s".formatted(new_line, new_line);
         String export_menu_8 = "%sIngresa la ruta en donde desea exportar el archivo clientes.csv%s".formatted(new_line, new_line);
         String export_menu_9 = "%sIngresa la ruta en donde desea exportar el archivo clientes.txt%s".formatted(new_line, new_line);
@@ -113,9 +117,25 @@ public class Utilidad {
             case "edit_menu_data_surname" -> edit_menu_15;
             case "edit_menu_data_years" -> edit_menu_16;
             case "edit_menu_data_choice" -> edit_menu_17;
-            default -> throw new IllegalStateException("Mensaje no encontrado para: " + message);
+            case "edit_menu_new_run" -> edit_menu_18;
+            case "edit_menu_new_name" -> edit_menu_19;
+            case "edit_menu_new_surname" -> edit_menu_20;
+            case "edit_menu_new_years" -> edit_menu_21;
+            case "edit_menu_success" -> edit_menu_22;
+            case "edit_menu_fail" -> edit_menu_23;
+            case "load_menu_header" -> load_menu_header;
+            case "load_menu_input" -> load_menu_3;
+            case "load_menu_success" -> load_menu_success;
+            case "load_menu_fail" -> load_menu_fail;
+            case "export_menu_header" -> export_menu_header;
+            case "export_menu_csv" -> export_menu_csv;
+            case "export_menu_txt" -> export_menu_txt;
+            case "export_menu_success_csv" -> export_menu_success_csv;
+            case "export_menu_success_txt" -> export_menu_success_txt;
+            case "export_menu_fail_csv" -> export_menu_fail_csv;
+            case "export_menu_fail_txt" -> export_menu_fail_txt;
+            default -> "Mensaje no encontrado para: %s".formatted(message);
         };
-        ;
 
         // Retornar la respuesta
         return answer;
