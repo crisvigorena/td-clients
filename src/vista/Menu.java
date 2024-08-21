@@ -10,13 +10,13 @@ import java.util.Scanner;
 public class Menu {
 
     // Crear las variables de clase
+    String fileName = "Clientes";
+    String fileName1 = "DBClientes.csv";
+    Scanner scanner = new Scanner(System.in);
     ClienteServicio clienteServicio = new ClienteServicio();
     ArchivoServicio archivoServicio = new ArchivoServicio();
     ExportadorCsv exportadorCsv = new ExportadorCsv();
     ExportadorTxt exportadorTxt = new ExportadorTxt();
-    String fileName = "Clientes";
-    String fileName1 = "DBClientes.csv";
-    Scanner scanner = new Scanner(System.in);
 
     // Crear método para desplegar el menú
     public void iniciarMenu() {

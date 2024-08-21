@@ -3,7 +3,7 @@ package utilidades;
 public class Utilidad {
 
     // Crear variables de clase
-    String new_line = System.lineSeparator();
+    static String new_line = System.lineSeparator();
 
     // Crear un método que limpie la pantalla
     public void limpiarConsola() {
@@ -11,7 +11,7 @@ public class Utilidad {
     }
 
     // Crear un método para mostrar mensajes al usuario
-    public String crearMensaje(String message, String argument) throws IllegalStateException {
+    public static String crearMensaje(String message, String argument) throws IllegalStateException {
 
         // Definir variable de respuesta
         String answer;
