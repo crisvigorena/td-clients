@@ -1,8 +1,11 @@
 package modelo;
 
+/**
+ * Se contruye la clase Cliente
+ */
 public class Cliente {
 
-    // Declarar las variables de clase
+    // Se declaran las variables de clase
     String runCliente;
     String nombreCliente;
     String apellidoCliente;
@@ -71,6 +74,9 @@ public class Cliente {
     // Crear método toString
 
     @Override
+
+
+//Se instancia un metodo para sobreescribir Variables
     public String toString() {
         // Definir variables de trabajo
         String newLine = System.lineSeparator();

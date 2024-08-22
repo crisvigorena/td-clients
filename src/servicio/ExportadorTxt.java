@@ -7,16 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * The type Exportador txt.
+/**Se instancia la clase ExportadorTxt
+ * que hereda de la clase Exportador
  */
 public class ExportadorTxt extends Exportador {
 
-    /**
-     * Instantiates a new Exportador txt.
-     *
-     * @param directory the directory
-     */
+
+
+    /**Se instancia el metodo Exportador txt.
+     * */
     public ExportadorTxt(String directory) {
         super(directory);
         delimiter = "\t";

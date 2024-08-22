@@ -38,6 +38,8 @@ public class ClienteServicio {
     public void editarCliente(String runCliente, String nombreCliente, String apellidoCliente,
                    @SuppressWarnings("SpellCheckingInspection") String aniosCliente,
                    @SuppressWarnings("SpellCheckingInspection") CategoriaEnum nombreCategoria) {
+
+        //Iterar sobre la lista cliente y para guardar los datos editados
         for (Cliente record: listaClientes) {
             if (Objects.equals(record.getRunCliente(), runCliente)) {
                 record.setNombreCliente(nombreCliente);

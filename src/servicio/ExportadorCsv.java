@@ -7,7 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**Se declara la clase ExportadorCsv que hereda de la clase exportador
+ */
 public class ExportadorCsv extends Exportador {
+
+
+    /**Se instancia el metodo ExportadorCsv
+     */
     public ExportadorCsv(String directory) {
         super(directory);
         delimiter = ",";

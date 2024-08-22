@@ -1,5 +1,6 @@
 package vista;
 
+//se importan los archivos descritos
 import servicio.ArchivoServicio;
 import servicio.ClienteServicio;
 import servicio.ExportadorCsv;
@@ -7,6 +8,8 @@ import servicio.ExportadorTxt;
 
 import java.util.Scanner;
 
+/**Se crea la clase menu
+ */
 public class Menu {
 
     // Crear las variables de clase
@@ -33,35 +36,35 @@ public class Menu {
     // Crear un método para agregar un nuevo cliente
     public String[] agregarCliente() {
 
-        // Retornar resultado y mensajes al usuario
+        // Retornar resultado de tipo String junto con un mensajes al usuario
         return new String[] {""};
     }
 
     // Crear un método para editar los datos de un cliente
     public String[] editarCliente() {
 
-        // Retornar resultado y mensajes al usuario
+        // Retornar resultado de tipo String junto con un mensajes al usuario
         return new String[] {""};
     }
 
     // Crear un método para editar los datos de un cliente
     public String[] importarDatos() {
 
-        // Retornar resultado y mensajes al usuario
+        // Retornar resultado de tipo String junto con un mensajes al usuario
         return new String[] {""};
     }
 
     // Crear un método para editar los datos de un cliente
     public String[] exportarDatos() {
 
-        // Retornar resultado y mensajes al usuario
+        // Retornar resultado de tipo String junto con un mensajes al usuario
         return new String[] {""};
     }
 
     // Crear un método para editar los datos de un cliente
     public String[] terminarPrograma() {
 
-        // Retornar resultado y mensajes al usuario
+        // Retornar resultado de tipo String junto con un mensajes al usuario
         return new String[] {""};
     }
 }

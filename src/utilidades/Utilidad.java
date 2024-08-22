@@ -1,5 +1,7 @@
 package utilidades;
 
+
+//Se instamcia la clase Utilidad
 public class Utilidad {
 
     // Crear variables de clase

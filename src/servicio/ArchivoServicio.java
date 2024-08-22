@@ -6,6 +6,10 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+/**
+ * Clase publica ArchivoServicio.
+ * Amplia la clase abstracta Exportador
+ */
 public class ArchivoServicio extends Exportador {
 
     // Crear variables de clase
@@ -15,12 +19,20 @@ public class ArchivoServicio extends Exportador {
     static String new_line = System.lineSeparator();
     static String exc_cause;
 
+    /**
+     * Se instancia el metodo ArchivoServicio como constructor
+     * hereda un String de nombre directory
+     * el cual lo retorna posteriormente a la clase padre
+     */
     public ArchivoServicio(String directory) {
         super(directory);
     }
 
-
+    /**Se instancia un metodo con un arreglo de tipo String llamado readFile
+     * *para leer los archivos guardados
+     */
     private static String[] readFile(String directory, String file_name) {
+
         // Definir variables de trabajo y respuesta
         String folder_path = "%s%s".formatted(src_directory, directory);
         String file_path = "%s%s%s".formatted(folder_path, separator, file_name);
@@ -54,9 +66,10 @@ public class ArchivoServicio extends Exportador {
             // Cerrar el archivo
             file_buffer.close();
             file_reader.close();
+            }
 
-        } catch (IOException io_exc) {
             // Si se produce una excepción, preparar un mensaje de error
+         catch (IOException io_exc) {
             answer[0] = "false";
             exc_cause = String.valueOf(io_exc.getCause());
             answer[1] = "%s.%s%s".formatted(read_error_msg, new_line, exc_cause);
@@ -69,7 +82,9 @@ public class ArchivoServicio extends Exportador {
         return answer;
     }
 
+    //se declara un metodo ArrayList
     private static ArrayList<String> stringToArray(String content) {
+
         // Definir variables de trabajo y respuesta
         ArrayList<String> answer;
 
@@ -91,6 +106,9 @@ public class ArchivoServicio extends Exportador {
      * @param listaClientes
      */
     @Override
+
+    /**Se intancia el metodo exportar
+     */
     public void exportar(String fileName, List<Cliente> listaClientes) {
 
     }
