@@ -18,13 +18,13 @@ import utilidades.Utilidad;
 public abstract class Exportador {
 
     // Crear variables de clase
-    String separator = File.separator;
-    String new_line = System.lineSeparator();
+    static String separator = File.separator;
+    static String new_line = System.lineSeparator();
     static String dir_path;
-    String file_path;
+    static String file_path;
     String delimiter;
     ArrayList<Cliente> clientsList;
-    String exc_cause;
+    static String exc_cause;
 
     public Exportador(String directory) {
         dir_path = directory;
