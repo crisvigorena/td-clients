@@ -66,5 +66,6 @@ public class Menu {
 
         // Retornar resultado de tipo String junto con un mensajes al usuario
         return new String[] {""};
+        System.out.println("2");
     }
 }
