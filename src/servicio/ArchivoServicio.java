@@ -10,13 +10,16 @@ import java.util.*;
 
 public class ArchivoServicio extends Exportador {
 
+    // Crear una variable de clase para contener la lista de clientes leída desde el archivo CSV
+    ArrayList<Cliente> clientsList;
+
     public ArchivoServicio(String directory) {
         super(directory);
         delimiter = ",";
     }
 
 
-    private static String[] readFile(String file_name) {
+    private String[] readFile(String file_name) {
         // Definir variables de trabajo y respuesta
         String directory = dir_path;
         file_path = "%s%s%s".formatted(directory, separator, file_name);
@@ -65,7 +68,7 @@ public class ArchivoServicio extends Exportador {
         return answer;
     }
 
-    private static ArrayList<String> stringToArray(String content) {
+    private ArrayList<String> stringToArray(String content) {
         // Definir variables de trabajo y respuesta
         ArrayList<String> all_lines;
         ArrayList<ArrayList<String>> answer = new ArrayList<>();
@@ -83,7 +86,7 @@ public class ArchivoServicio extends Exportador {
     }
 
     // Crear un método para cargar datos por lotes en el sistema, leyendo desde un archivo CSV
-    public ArrayList<ArrayList<String>> cargarDatos(String fileName) {
+    private ArrayList<ArrayList<String>> cargarDatos(String fileName) {
 
         // Definir variables de trabajo y respuesta
         String[] operation_result;
@@ -120,7 +123,6 @@ public class ArchivoServicio extends Exportador {
         ArrayList<String> operation_result;
         ArrayList<ArrayList<String>> loaded_data;
         Cliente temp_client;
-        ArrayList<Cliente> loaded_clients = new ArrayList<>();
 
         // Definir el mensaje por defecto a mostrar al usuario (mensaje de error)
         user_msg = Utilidad.crearMensaje("load_menu_fail", "");
@@ -143,15 +145,18 @@ public class ArchivoServicio extends Exportador {
                         item.get(3), CategoriaEnum.valueOf(item.get(4)));
 
                 // Agregar el Cliente a la lista de clientes
-                loaded_clients.add(temp_client);
+                clientsList.add(temp_client);
             }
 
             // Luego, recuperar el mensaje de éxito para mostrar al usuario
             user_msg = Utilidad.crearMensaje("load_menu_success", "");
-
         }
 
         // Finalmente, imprimir el mensaje al usuario
         System.out.println(user_msg);
+    }
+
+    public ArrayList<Cliente> getClientsList() {
+        return clientsList;
     }
 }
