@@ -5,9 +5,18 @@ public class Utilidad {
     // Crear variables de clase
     static String new_line = System.lineSeparator();
 
-    // Crear un método que limpie la pantalla
-    public void limpiarConsola() {
+    /**
+     *  Como la consola de IntelliJ no responde a la instrucción de limpiar pantalla de un shell normal, es necesario
+     *  simularlo insertando saltos de línea.
+     */
+// Crear un método que limpie la pantalla
+    public static void limpiarConsolaIntellij() {
 
+        // Definir la variable de trabajo
+        StringBuilder newLine = new StringBuilder();
+
+        // Imprimir 50 saltos de línea
+        System.out.println(newLine.repeat(System.lineSeparator(), 50).toString());
     }
 
     // Crear un método para mostrar mensajes al usuario
@@ -24,14 +33,18 @@ public class Utilidad {
         String main_menu_5 = "5. Exportar Datos%s".formatted(new_line);
         String main_menu_6 = "6. Salir%s%s".formatted(new_line, new_line);
         String main_menu_7 = "Ingrese una opción: ";
+        String main_menu_8 = "Opción inválida. Ingrese una opción disponible en el menú (1 al 6): ";
         String main_menu = "%s%s%s%s%s%s%s".formatted(main_menu_1, main_menu_2, main_menu_3, main_menu_4, main_menu_5,
                 main_menu_6, main_menu_7);
 
         // Crear mensajes del Menú Agregar Cliente
-        String add_menu_run = "%sIngresa RUN del Cliente: ".formatted(new_line);
+        String add_menu_title = "%s%s-------------Agregar Cliente-------------%s%s".formatted(new_line, new_line,
+                new_line, new_line);
+        String add_menu_run = "%sIngresa RUN del Cliente (formato: 12345678-9): ".formatted(new_line);
         String add_menu_name = "%sIngresa Nombre del Cliente: ".formatted(new_line);
         String add_menu_surname = "%sIngresa Apellido del Cliente: ".formatted(new_line);
         String add_menu_years = "%sIngresa Años Como Cliente: ".formatted(new_line);
+        String add_menu_header = "%s%s".formatted(add_menu_title, add_menu_name);
 
         // Crear mensajes del Menú Editar Cliente
         String edit_menu_1 = "%s%s-------------Editar Cliente-------------%s%s".formatted(new_line, new_line,
@@ -43,22 +56,22 @@ public class Utilidad {
         String edit_menu = "%s%s%s%s%s".formatted(edit_menu_1, edit_menu_2, edit_menu_3, edit_menu_4, edit_menu_5);
         String edit_menu_6 = "%s%s----------------------------------------%s%s".formatted(new_line, new_line,
                 new_line, new_line);
-        String edit_menu_7 = "Ingrese RUN del Cliente a editar: ";
+        String edit_menu_7 = "Ingrese RUN del Cliente a editar (formato: 12345678-9): ";
         String edit_menu_get_run = "%s%s".formatted(edit_menu_6, edit_menu_7);
         String edit_menu_8 = "%s%s-----Actualizando estado del Cliente----%s";
         String edit_menu_9 = "El estado actual es: %s%s".formatted(argument, new_line);
         String edit_menu_10 = "1.-Si desea cambiar el estado del Cliente a %s%s".formatted(argument, new_line);
         String edit_menu_11 = "2.-Si desea mantener el estado del cliente (%s)%s".formatted(argument, new_line);
         String edit_menu_status_header = "%s%s".formatted(edit_menu_8, edit_menu_9);
+        String edit_menu_status_choose = main_menu_7;
         String edit_menu_12 = "%s%s----Actualizando datos del Cliente-----%s%s".formatted(new_line, new_line,
                 new_line, new_line);
         String edit_menu_13 = "1.-El RUN del Cliente es: %s%s".formatted(argument, new_line);
-        String edit_menu_data_header = "%s%s".formatted(edit_menu_12, edit_menu_13);
         String edit_menu_14 = "2.-El Nombre del Cliente es: %s%s".formatted(argument, new_line);
         String edit_menu_15 = "3.-El Apellido del Cliente es: %s%s".formatted(argument, new_line);
         String edit_menu_16 = "4.-Los años como Cliente son: %s%s".formatted(argument, new_line);
         String edit_menu_17 = "%sIngrese opción a editar de los datos del cliente: ".formatted(new_line);
-        String edit_menu_18 = "%s1.-Ingrese nuevo RUN del Cliente: ".formatted(new_line);
+        String edit_menu_18 = "%s1.-Ingrese nuevo RUN del Cliente (formato: 12345678-9): ".formatted(new_line);
         String edit_menu_19 = "%s2.-Ingrese nuevo Nombre del Cliente: ".formatted(new_line);
         String edit_menu_20 = "%s3.-Ingrese nuevo Apellido del Cliente: ".formatted(new_line);
         String edit_menu_21 = "%s4.-Ingrese nueva Cantidad de Años como Cliente: ".formatted(new_line);
@@ -99,11 +112,13 @@ public class Utilidad {
         String export_menu_15 = "%sHubo un error al intentar exportar los datos de los clientes en formato txt.%s".formatted(new_line, new_line);
         String export_menu_success_txt = "%s%s".formatted(export_menu_11, export_menu_14);
         String export_menu_fail_txt = "%s%s".formatted(export_menu_11, export_menu_15);
+        String end_program = "%s---------El programa ha terminado. Adios.-----------%s".formatted(new_line, new_line);
 
         // Construir el mensaje requerido
         answer = switch (message) {
             case "main_menu" -> main_menu;
-            case "add_menu_run" -> add_menu_run;
+            case "main_menu_fail" -> main_menu_8;
+            case "add_menu_header" -> add_menu_header;
             case "add_menu_name" -> add_menu_name;
             case "add_menu_surname" -> add_menu_surname;
             case "add_menu_years" -> add_menu_years;
@@ -112,7 +127,9 @@ public class Utilidad {
             case "edit_menu_status_header" -> edit_menu_status_header;
             case "edit_menu_status_change" -> edit_menu_10;
             case "edit_menu_status_keep" -> edit_menu_11;
-            case "edit_menu_data_header" -> edit_menu_data_header;
+            case "edit_menu_status_choose" -> edit_menu_status_choose;
+            case "edit_menu_data_header" -> edit_menu_12;
+            case "edit_menu_data_run" -> edit_menu_13;
             case "edit_menu_data_name" -> edit_menu_14;
             case "edit_menu_data_surname" -> edit_menu_15;
             case "edit_menu_data_years" -> edit_menu_16;
@@ -134,6 +151,7 @@ public class Utilidad {
             case "export_menu_success_txt" -> export_menu_success_txt;
             case "export_menu_fail_csv" -> export_menu_fail_csv;
             case "export_menu_fail_txt" -> export_menu_fail_txt;
+            case "end_program" -> end_program;
             default -> "Mensaje no encontrado para: %s".formatted(message);
         };
 
