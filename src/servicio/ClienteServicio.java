@@ -1,5 +1,6 @@
 package servicio;
 
+//Se importan los archivos necesarios
 import modelo.CategoriaEnum;
 import modelo.Cliente;
 
@@ -7,9 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
+//Se declaran la clase ClienteServicio
 public class ClienteServicio {
 
-    // Crear las variables de trabajo
+    /**Se declara la lista Cliente
+     * con una variable listaClientes
+     */
     List<Cliente> listaClientes;
 
 
