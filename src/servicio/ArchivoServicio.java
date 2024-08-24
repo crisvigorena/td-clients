@@ -22,7 +22,7 @@ public class ArchivoServicio extends Exportador {
     private String[] readFile(String file_name) {
         // Definir variables de trabajo y respuesta
         String directory = dir_path;
-        file_path = "%s%s%s".formatted(directory, separator, file_name);
+        file_path = file_name;
         File current_file = new File(file_path);
         FileReader file_reader;
         BufferedReader file_buffer;
@@ -154,6 +154,13 @@ public class ArchivoServicio extends Exportador {
 
         // Finalmente, imprimir el mensaje al usuario
         System.out.println(user_msg);
+    }
+
+    // Crear un método para enmascarar ese horrible y poco intuitivo método 'exportar' en una clase de importación
+    public void importar(String filepath, List<Cliente> listaClientes) {
+
+        // Pasar los argumentos al método 'exportar'
+        exportar(filepath, listaClientes);
     }
 
     public ArrayList<Cliente> getClientsList() {
