@@ -7,17 +7,22 @@ import servicio.ClienteServicio;
 import servicio.ExportadorCsv;
 import servicio.ExportadorTxt;
 import utilidades.Utilidad;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Menu {
 
     // Crear las variables de clase
     ArrayList<Cliente> listaClientes;
-    String defaultDirectory = "static";
+    String separator = File.separator;
+    String defaultDirectory = "%s%s%s".formatted(System.getProperty("user.dir"), separator, "static");
     String fileName = "Clientes";
     String fileName1 = "DBClientes.csv";
+    String default_import_file = "%s%s%s".formatted(defaultDirectory, separator, fileName1);
+    String default_export_file = "%s%s%s".formatted(defaultDirectory, separator, fileName);
     Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
     ClienteServicio clienteServicio = new ClienteServicio(listaClientes);
     ArchivoServicio archivoServicio = new ArchivoServicio(defaultDirectory);
@@ -188,9 +193,6 @@ public class Menu {
         // Crear las variables de trabajo
         String choice_edit;
         String choice_run;
-        String choice_name;
-        String choice_surname;
-        String choice_years;
         String choice_edit_status;
         String choice_edit_data;
         String choice_edit_run;
@@ -200,7 +202,6 @@ public class Menu {
         CategoriaEnum current_state;
         CategoriaEnum opposite_state;
         Cliente client_data;
-        CategoriaEnum client_category;
         boolean valid_choice;
         boolean client_removed;
         boolean client_added;
@@ -434,15 +435,106 @@ public class Menu {
     // Crear un método para importar datos de múltiples clientes desde un archivo CSV
     public void importarDatos() {
 
-        // Retornar resultado y mensajes al usuario
-        return new String[]{""};
+        // Crear variables de trabajo
+        String choice_path;
+        boolean valid_choice;
+
+        // Imprimir mensajes y validar elección
+        do {
+            // Mostrar el encabezado y pedir al usuario que ingrese la ruta de importación
+            System.out.println(Utilidad.crearMensaje("load_menu_header", ""));
+            System.out.println(Utilidad.crearMensaje("load_menu_input", default_import_file));
+
+            // Leer elección del usuario desde el teclado
+            choice_path = scanner.next();
+
+            // Comprobar si el usuario no escribió nada, entonces interpretarlo como que acepta la ruta por defecto
+            if (Objects.equals(choice_path, "")) {
+                choice_path = default_import_file;
+            }
+
+            // Comprobar que el usuario solo ingresa la opción disponible
+            valid_choice = choice_path.matches("^[\\p{Alnum}\\p{Zs}/\"´:\\\\]+$");
+
+        } while (!valid_choice);
+
+        // Leer los datos desde el archivo
+        archivoServicio.importar(choice_path, listaClientes);
+
+        // Recuperar la lista de Clientes desde la clase importadora
+        listaClientes = archivoServicio.getClientsList();
     }
 
     // Crear un método para exportar los datos de todos los clientes a un archivo CSV o TXT
     public void exportarDatos() {
 
-        // Retornar resultado y mensajes al usuario
-        return new String[]{""};
+        // Crear variables de trabajo
+        String choice_path;
+        String chosen_format = "export_menu_csv";
+        String file_extension = ".csv";
+        boolean valid_choice;
+        String filename_regex;
+        String[] chosen_directory;
+
+        // Imprimir mensajes y validar elección de formato de archivo
+        do {
+            // Mostrar el encabezado y pedir al usuario que ingrese la ruta de exportación
+            System.out.println(Utilidad.crearMensaje("export_menu_header", ""));
+
+            // Leer elección del usuario desde el teclado
+            choice_path = scanner.next();
+
+            // Comprobar que el usuario solo ingresa la opción disponible
+            valid_choice = choice_path.matches("^[12]$");
+
+        } while (!valid_choice);
+
+        // Si el usuario eligió formato TXT, reasignar la variable
+        if (choice_path.equals("2")) {
+            chosen_format = "export_menu_txt";
+            file_extension = ".txt";
+        }
+
+        // Imprimir mensajes y validar elección de ruta de exportación
+        do {
+            // Mostrar el encabezado y pedir al usuario que ingrese la ruta de exportación
+            default_export_file = "%s%s".formatted(default_export_file, file_extension);
+            System.out.println(Utilidad.crearMensaje(chosen_format, default_export_file));
+
+            // Leer elección del usuario desde el teclado
+            choice_path = scanner.next();
+
+            // Comprobar si el usuario no escribió nada, entonces interpretarlo como que acepta la ruta por defecto
+            if (Objects.equals(choice_path, "")) {
+                choice_path = default_export_file;
+            }
+
+            // Comprobar que el usuario solo ingresa la opción disponible
+            valid_choice = choice_path.matches("^[\\p{Alnum}\\p{Zs}/\"´:\\\\]+$");
+
+        } while (!valid_choice);
+
+        // Separar el nombre del archivo de la ruta ingresada por el usuario
+        filename_regex = "%s%s%s".formatted(separator, fileName, file_extension);
+        chosen_directory = choice_path.split(filename_regex);
+
+        // Exportar los datos al archivo
+        if (file_extension.equals(".csv")) {
+
+            // El formato elegido fue CSV. Primero pasar el directorio
+            exportadorCsv.setDir_path(chosen_directory[0]);
+
+            // Exportar
+            exportadorCsv.exportar(choice_path, listaClientes);
+
+        } else {
+
+            // El formato elegido fue CSV. Primero pasar el directorio
+            exportadorTxt.setDir_path(chosen_directory[0]);
+
+            // Exportar
+            exportadorTxt.exportar(choice_path, listaClientes);
+        }
     }
 
     // Crear un método para finalizar la ejecución del programa

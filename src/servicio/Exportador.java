@@ -10,7 +10,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import utilidades.Utilidad;
 
 /**
  * The type Exportador.
@@ -18,20 +17,20 @@ import utilidades.Utilidad;
 public abstract class Exportador {
 
     // Crear variables de clase
-    static String separator = File.separator;
-    static String new_line = System.lineSeparator();
-    static String dir_path;
-    static String file_path;
-    String delimiter;
     ArrayList<Cliente> clientsList;
-    static String exc_cause;
+    String separator = File.separator;
+    String new_line = System.lineSeparator();
+    String dir_path;
+    String file_path;
+    String delimiter;
+    String exc_cause;
 
     public Exportador(String directory) {
         dir_path = directory;
     }
 
-    public static void setDir_path(String dir_path) {
-        Exportador.dir_path = dir_path;
+    public void setDir_path(String dir_path) {
+        this.dir_path = dir_path;
     }
 
     public void setClientsList(ArrayList<Cliente> clientsList) {
@@ -77,9 +76,8 @@ public abstract class Exportador {
      */
     public String[] crearArchivo(String fichero) {
         // Definir variables de trabajo y respuesta
-        String directory = dir_path;
-        file_path = "%s%s%s".formatted(directory, separator, fichero);
-        File folder = new File(directory);
+        file_path = "%s%s%s".formatted(dir_path, separator, fichero);
+        File folder = new File(dir_path);
         File file = new File(file_path);
         boolean folder_created = false;
         boolean file_created = false;

@@ -82,7 +82,7 @@ public class Utilidad {
         String load_menu_1 = "%s---------Cargar Datos-----------%s".formatted(new_line, new_line);
         String load_menu_2 = "%sIngresa la ruta en donde se encuentra el archivo DBClientes.csv%s".formatted(new_line, new_line);
         String load_menu_header = "%s%s".formatted(load_menu_1, load_menu_2);
-        String load_menu_3 = "Ruta por defecto es [%s]: ".formatted(argument);
+        String load_menu_3 = "Ruta por defecto es [%s]. Ingresa la ruta deseada: ".formatted(argument);
         String load_menu_4 = edit_menu_6;
         String load_menu_5 = "%sDatos cargados correctamente en la lista.%s".formatted(new_line, new_line);
         String load_menu_6 = "%sHubo un error al intentar cargar los datos en la lista.%s".formatted(new_line, new_line);
@@ -98,8 +98,8 @@ public class Utilidad {
         String export_menu_6 = main_menu_7;
         String export_menu_header = "%s%s%s%s%s%s".formatted(export_menu_1, export_menu_2, export_menu_3, export_menu_4, export_menu_5, export_menu_6);
         String export_menu_7 = "%s---------Exportar Datos-----------%s".formatted(new_line, new_line);
-        String export_menu_8 = "%sIngresa la ruta en donde desea exportar el archivo clientes.csv%s".formatted(new_line, new_line);
-        String export_menu_9 = "%sIngresa la ruta en donde desea exportar el archivo clientes.txt%s".formatted(new_line, new_line);
+        String export_menu_8 = "%sIngresa la ruta en donde desea exportar el archivo clientes.csv: ".formatted(new_line);
+        String export_menu_9 = "%sIngresa la ruta en donde desea exportar el archivo clientes.txt: ".formatted(new_line);
         String export_menu_10 = load_menu_3;
         String export_menu_csv = "%s%s%s".formatted(export_menu_7, export_menu_8, export_menu_10);
         String export_menu_txt = "%s%s%s".formatted(export_menu_7, export_menu_9, export_menu_10);
