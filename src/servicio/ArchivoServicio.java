@@ -11,7 +11,7 @@ import java.util.*;
 public class ArchivoServicio extends Exportador {
 
     // Crear una variable de clase para contener la lista de clientes leída desde el archivo CSV
-    ArrayList<Cliente> clientsList;
+    ArrayList<Cliente> clientsList = new ArrayList<>();
 
     public ArchivoServicio(String directory) {
         super(directory);
@@ -45,10 +45,15 @@ public class ArchivoServicio extends Exportador {
             file_buffer = new BufferedReader(file_reader);
 
             // Leer línea por línea
-            do {
+            new_datum = file_buffer.readLine();
+            while (new_datum != null) {
+                if (answer[2].isEmpty()) {
+                    answer[2] = new_datum;
+                } else {
+                    answer[2] = "%s%s%s".formatted(answer[2], "|", new_datum);
+                }
                 new_datum = file_buffer.readLine();
-                answer[2] = "%s%s%s".formatted(answer[2], "|", new_datum);
-            } while (new_datum != null);
+            };
 
             // Cerrar el archivo
             file_buffer.close();
@@ -78,7 +83,7 @@ public class ArchivoServicio extends Exportador {
 
         // Iterar sobre cada uno de los elementos de "all_lines". Cada elemento corresponde a un cliente
         for (String item: all_lines) {
-            answer.add((ArrayList<String>) Arrays.asList(item.split(",")));
+            answer.add(new ArrayList<>(Arrays.asList(item.split(","))));
         }
 
         // Retornar la respuesta
@@ -86,24 +91,24 @@ public class ArchivoServicio extends Exportador {
     }
 
     // Crear un método para cargar datos por lotes en el sistema, leyendo desde un archivo CSV
-    private ArrayList<ArrayList<String>> cargarDatos(String fileName) {
+    private ArrayList<String> cargarDatos(String fileName) {
 
         // Definir variables de trabajo y respuesta
         String[] operation_result;
-        ArrayList<ArrayList<String>> answer = new ArrayList<>();
+        ArrayList<String> answer = new ArrayList<>();
 
         // Leer los datos desde el archivo CSV
         operation_result = readFile(fileName);
 
-        // Convertir el array en ArrayList y agregarlo como primer elemento en la respuesta
-        answer.add((ArrayList<String>) Arrays.asList(operation_result));
+        // Agregar el resultado de la operación en la respuesta
+        answer.add(operation_result[0]);
 
         // Comprobar el resultado de la operación. Si fue exitosa, continuar procesando los datos
         if (Objects.equals(operation_result[0], "true")) {
 
             // Convertir los datos leídos en un ArrayList que contenga los datos separados por tipo y por cliente,
             // y agregarlos a la respuesta
-            answer.add(stringToArray(operation_result[2]));
+            answer.addAll(stringToArray(operation_result[2]));
         }
 
         // Retornar los datos listos para ser importados en el sistema
@@ -120,8 +125,9 @@ public class ArchivoServicio extends Exportador {
 
         // Definir variables de trabajo
         String user_msg;
-        ArrayList<String> operation_result;
-        ArrayList<ArrayList<String>> loaded_data;
+        String operation_result;
+        ArrayList<String> loaded_data;
+        String[] line_data;
         Cliente temp_client;
 
         // Definir el mensaje por defecto a mostrar al usuario (mensaje de error)
@@ -134,15 +140,16 @@ public class ArchivoServicio extends Exportador {
         operation_result = loaded_data.removeFirst();
 
         // Comprobar el resultado de la operación
-        if (Objects.equals(operation_result.getFirst(), "true")) {
+        if (Objects.equals(operation_result, "true")) {
 
             // Si la operación fue exitosa, continuar procesando los datos.
             // Iterar sobre los datos leídos desde el archivo (por cada Cliente)
-            for (ArrayList<String> item : loaded_data) {
+            for (String item : loaded_data) {
 
                 // Guardar los datos del cliente en un objeto Cliente
-                temp_client = new Cliente(item.get(0), item.get(1), item.get(2),
-                        item.get(3), CategoriaEnum.valueOf(item.get(4)));
+                line_data = item.split(",");
+                temp_client = new Cliente(line_data[0], line_data[1], line_data[2],
+                        line_data[3], CategoriaEnum.valueOf(line_data[4]));
 
                 // Agregar el Cliente a la lista de clientes
                 clientsList.add(temp_client);

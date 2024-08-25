@@ -36,6 +36,10 @@ public class Utilidad {
         String main_menu_8 = "Opción inválida. Ingrese una opción disponible en el menú (1 al 6): ";
         String main_menu = "%s%s%s%s%s%s%s".formatted(main_menu_1, main_menu_2, main_menu_3, main_menu_4, main_menu_5,
                 main_menu_6, main_menu_7);
+        String return_main_menu = "Para volver al Menú Principal, escriba la letra S: ";
+
+        // Crear mensaje para Listar Clientes
+        String empty_list = "%s%sLa lista de Clientes está vacía.%s%s".formatted(new_line, new_line, new_line, new_line);
 
         // Crear mensajes del Menú Agregar Cliente
         String add_menu_title = "%s%s-------------Agregar Cliente-------------%s%s".formatted(new_line, new_line,
@@ -44,7 +48,11 @@ public class Utilidad {
         String add_menu_name = "%sIngresa Nombre del Cliente: ".formatted(new_line);
         String add_menu_surname = "%sIngresa Apellido del Cliente: ".formatted(new_line);
         String add_menu_years = "%sIngresa Años Como Cliente: ".formatted(new_line);
-        String add_menu_header = "%s%s".formatted(add_menu_title, add_menu_name);
+        String add_menu_header = "%s%s".formatted(add_menu_title, add_menu_run);
+        String add_menu_success = "%s%sEl Cliente ha sido creado exitosamente.%s%s".formatted(new_line, new_line,
+                new_line, new_line);
+        String add_menu_fail= "%s%sEl Cliente no pudo ser creado.%s%s".formatted(new_line, new_line,
+                new_line, new_line);
 
         // Crear mensajes del Menú Editar Cliente
         String edit_menu_1 = "%s%s-------------Editar Cliente-------------%s%s".formatted(new_line, new_line,
@@ -112,16 +120,20 @@ public class Utilidad {
         String export_menu_15 = "%sHubo un error al intentar exportar los datos de los clientes en formato txt.%s".formatted(new_line, new_line);
         String export_menu_success_txt = "%s%s".formatted(export_menu_11, export_menu_14);
         String export_menu_fail_txt = "%s%s".formatted(export_menu_11, export_menu_15);
-        String end_program = "%s---------El programa ha terminado. Adios.-----------%s".formatted(new_line, new_line);
+        String end_program = "%s---------El programa ha terminado. Adiós.-----------%s".formatted(new_line, new_line);
 
         // Construir el mensaje requerido
         answer = switch (message) {
+            case "return_main_menu" -> return_main_menu;
             case "main_menu" -> main_menu;
             case "main_menu_fail" -> main_menu_8;
+            case "empty_list" -> empty_list;
             case "add_menu_header" -> add_menu_header;
             case "add_menu_name" -> add_menu_name;
             case "add_menu_surname" -> add_menu_surname;
             case "add_menu_years" -> add_menu_years;
+            case "add_menu_success" -> add_menu_success;
+            case "add_menu_fail" -> add_menu_fail;
             case "edit_menu" -> edit_menu;
             case "edit_menu_get_run" -> edit_menu_get_run;
             case "edit_menu_status_header" -> edit_menu_status_header;

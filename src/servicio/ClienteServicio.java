@@ -2,6 +2,7 @@ package servicio;
 
 import modelo.CategoriaEnum;
 import modelo.Cliente;
+import utilidades.Utilidad;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,25 @@ public class ClienteServicio {
 
     // Crear el constructor
     public ClienteServicio(List<Cliente> listaClientes) {
+
+        // Cargar la lista de clientes en el sistema
         this.listaClientes = new ArrayList<>(listaClientes);
     }
 
     // Crear un método para listar todos los clientes
     public void listarClientes() {
-        for (Cliente record : listaClientes) {
-            System.out.println(record.toString());
+
+        // Primero revisar que la lista de Clientes no está vacía
+        if (listaClientes.isEmpty()) {
+
+            // Imprimir mensaje informando al usuario de que la lista está vacía
+            System.out.println(Utilidad.crearMensaje("empty_list", ""));
+        } else {
+
+            // Caso contrario, listar todos los clientes con sus datos
+            for (Cliente record : listaClientes) {
+                System.out.println(record.toString());
+            }
         }
     }
 
@@ -29,8 +42,26 @@ public class ClienteServicio {
                                @SuppressWarnings("SpellCheckingInspection") String aniosCliente,
                                @SuppressWarnings("SpellCheckingInspection") CategoriaEnum nombreCategoria) {
 
+        // Crear variable de trabajo
+        boolean success = true;
+        String usr_msg = Utilidad.crearMensaje("add_menu_success", ""); // Éxito por defecto
+
         // Crear un objeto Cliente y agregarlo a la lista de Clientes
-        listaClientes.add(new Cliente(runCliente, nombreCliente, apellidoCliente, aniosCliente, nombreCategoria));
+        try {
+            success = listaClientes.add(new Cliente(runCliente, nombreCliente, apellidoCliente, aniosCliente, nombreCategoria));
+        } catch (Exception exc_cause) {
+            success = false;
+        }
+
+        // Elegir el mensaje a mostrar al usuario
+        if (!success) {
+
+            // Si el cliente NO fue agregado exitosamente, elegir el mensaje de error
+            usr_msg = Utilidad.crearMensaje("add_menu_fail", "");
+        }
+
+        // Imprimir el mensaje al usuario
+        System.out.println(usr_msg);
     }
 
     // Crear un método que importe un solo objeto Cliente
@@ -85,23 +116,34 @@ public class ClienteServicio {
     // Crear un método para eliminar un cliente
     public boolean eliminarCliente(String runCliente) {
 
+        // Crear variables de trabajo
+        int item_index = -1;
+        boolean answer = true;
+
         // Iterar en la lista de clientes
         for (Cliente record : listaClientes) {
 
             // Leer el RUN de cada elemento y compararlo con el RUN buscado
             if (Objects.equals(record.getRunCliente(), runCliente)) {
 
-                // Si coincide, remover el cliente de la lista
+                // Si coincide, obtener el número de índice en el array
                 try {
-                    listaClientes.remove(record);
+                    item_index = listaClientes.indexOf(record);
                 } catch (Exception exc_cause) {
-                    return false;
+                    answer = false;
                 }
             }
         }
 
-        // Si no puede encontrar el cliente, retornar false
-        return false;
+        // Intentar eliminar el cliente usando el número de índice
+        try {
+            listaClientes.remove(item_index);
+        } catch (Exception exc_cause) {
+            answer = false;
+        }
+
+        // Retornar la respuesta
+        return answer;
     }
 
     // Crear un método para importar una lista de clientes

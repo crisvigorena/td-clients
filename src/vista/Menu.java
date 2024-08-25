@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class Menu {
 
     // Crear las variables de clase
-    ArrayList<Cliente> listaClientes;
+    ArrayList<Cliente> listaClientes = new ArrayList<>();
     String separator = File.separator;
     String defaultDirectory = "%s%s%s".formatted(System.getProperty("user.dir"), separator, "static");
     String fileName = "Clientes";
@@ -183,6 +183,9 @@ public class Menu {
         // Crear el nuevo Cliente
         clienteServicio.agregarCliente(choice_run, choice_name, choice_surname, choice_years, client_category);
 
+        // Recuperar la lista de clientes actualizada y cargarla en esta clase
+        listaClientes = (ArrayList<Cliente>) clienteServicio.getListaClientes();
+
         // Retornar al Menú Principal cuando el usuario lo pida
         retornarMenuPrincipal();
     }
@@ -337,6 +340,8 @@ public class Menu {
 
                         // Actualizar el RUN del Cliente
                         client_data.setRunCliente(choice_edit_run);
+
+                        // Como el RUT cambió,
                     }
 
                     // El usuario quiere cambiar el Nombre
@@ -354,7 +359,7 @@ public class Menu {
                         } while (!valid_choice);
 
                         // Actualizar el Nombre del Cliente
-                        client_data.setRunCliente(choice_edit_name);
+                        client_data.setNombreCliente(choice_edit_name);
                     }
 
                     // El usuario quiere cambiar el Apellido
@@ -372,7 +377,7 @@ public class Menu {
                         } while (!valid_choice);
 
                         // Actualizar el Apellido del Cliente
-                        client_data.setRunCliente(choice_edit_surname);
+                        client_data.setApellidoCliente(choice_edit_surname);
                     }
 
                     // El usuario quiere cambiar los Años como Cliente
@@ -390,40 +395,18 @@ public class Menu {
                         } while (!valid_choice);
 
                         // Actualizar el Apellido del Cliente
-                        client_data.setRunCliente(choice_edit_years);
+                        client_data.setAniosCliente(choice_edit_years);
                     }
                 }
             }
         }
 
-        // Ahora que ya hemos actualizado los datos del cliente, debemos reemplazar el cliente
-        // Para eso, primero lo eliminamos de la lista de clientes
-        client_removed = clienteServicio.eliminarCliente(choice_run);
-
-        // Señalar el mensaje final que debiera ser mostrado por defecto (error en la operación)
-        final_usr_msg_state = false;
-
-        // Determinar si el cliente fue eliminado exitosamente
-        if (client_removed) {
-
-            // Señalar que el mensaje final que debiera ser mostrado es de éxito
-            final_usr_msg_state = true;
-
-            // Si el cliente fue eliminado exitosamente, entonces insertamos el objeto Cliente,
-            // con los datos actualizados, en la Lista de Clientes
-            client_added = clienteServicio.importarUnCliente(client_data);
-
-            // Determinar si el cliente fue agregado exitosamente
-            if (!client_added) {
-
-                // Señalar que el mensaje final que debiera ser mostrado es de érror
-                final_usr_msg_state = false;
-            }
-        }
+        // Como client_data es directamente un elemento en la lista de clientes de clienteServicio, cualquier cambio
+        // altera directamente la lista original. Entonces no es necesario eliminar el registro anterior a
+        // la modificación de datos
 
         // Crear el mensaje final al usuario con el resultado de la operación
-        final_usr_msg = final_usr_msg_state ? Utilidad.crearMensaje("edit_menu_success", "") :
-                        Utilidad.crearMensaje("edit_menu_fail", "");
+        final_usr_msg = Utilidad.crearMensaje("edit_menu_success", "");
 
         // Imprimir el mensaje final
         System.out.println(final_usr_msg);
@@ -454,7 +437,7 @@ public class Menu {
             }
 
             // Comprobar que el usuario solo ingresa la opción disponible
-            valid_choice = choice_path.matches("^[\\p{Alnum}\\p{Zs}/\"´:\\\\]+$");
+            valid_choice = choice_path.matches("^[.\\p{Alnum}\\p{Zs}/\"´:\\\\_-]+$");
 
         } while (!valid_choice);
 
@@ -463,12 +446,19 @@ public class Menu {
 
         // Recuperar la lista de Clientes desde la clase importadora
         listaClientes = archivoServicio.getClientsList();
+
+        // Cargar la lista de clientes en clienteServicio para que el listado funcione
+        clienteServicio.cargarListaDeClientes(listaClientes);
+
+        // Finalmente, retornar al Menú Principal cuando el usuario lo pida
+        retornarMenuPrincipal();
     }
 
     // Crear un método para exportar los datos de todos los clientes a un archivo CSV o TXT
     public void exportarDatos() {
 
         // Crear variables de trabajo
+        String new_line = System.lineSeparator();
         String choice_path;
         String chosen_format = "export_menu_csv";
         String file_extension = ".csv";
@@ -505,12 +495,12 @@ public class Menu {
             choice_path = scanner.next();
 
             // Comprobar si el usuario no escribió nada, entonces interpretarlo como que acepta la ruta por defecto
-            if (Objects.equals(choice_path, "")) {
+            if (Objects.equals(choice_path, new_line)) {
                 choice_path = default_export_file;
             }
 
             // Comprobar que el usuario solo ingresa la opción disponible
-            valid_choice = choice_path.matches("^[\\p{Alnum}\\p{Zs}/\"´:\\\\]+$");
+            valid_choice = choice_path.matches("^[.\\p{Alnum}\\p{Zs}/\"´:\\\\_-]+$");
 
         } while (!valid_choice);
 
@@ -529,12 +519,15 @@ public class Menu {
 
         } else {
 
-            // El formato elegido fue CSV. Primero pasar el directorio
+            // El formato elegido fue TXT. Primero pasar el directorio
             exportadorTxt.setDir_path(chosen_directory[0]);
 
             // Exportar
             exportadorTxt.exportar(choice_path, listaClientes);
         }
+
+        // Finalmente, retornar al Menú Principal cuando el usuario lo pida
+        retornarMenuPrincipal();
     }
 
     // Crear un método para finalizar la ejecución del programa

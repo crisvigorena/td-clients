@@ -77,13 +77,13 @@ public class Cliente {
         String description;
 
         // Crear mensaje al usuario
-        description = ("Datos del Cliente%s " +
-                "------------------" +
+        description = ("Datos del Cliente%s" +
+                "------------------%s" +
                 "RUN: %s,%s" +
                 "Nombre: %s,%s" +
                 "Apellido: %s,%s" +
                 "Años como cliente: %s, %s" +
-                "Categoría: %s%s").formatted(newLine,
+                "Categoría: %s%s").formatted(newLine, newLine,
                                             runCliente, newLine,
                                             nombreCliente, newLine,
                                             apellidoCliente, newLine,

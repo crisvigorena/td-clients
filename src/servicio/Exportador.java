@@ -76,7 +76,7 @@ public abstract class Exportador {
      */
     public String[] crearArchivo(String fichero) {
         // Definir variables de trabajo y respuesta
-        file_path = "%s%s%s".formatted(dir_path, separator, fichero);
+        file_path = fichero;
         File folder = new File(dir_path);
         File file = new File(file_path);
         boolean folder_created = false;
@@ -100,33 +100,35 @@ public abstract class Exportador {
         answer[0] = "true";
         answer[1] = "";
 
-        // Comprobar si ya existe la carpeta. Si existe, saltar este bloque y guardar un mensaje de error para el
-        // usuario. Caso contrario, crearlo
+        // Comprobar si ya existe la carpeta. Si existe, saltar este bloque y guardar un mensaje para el
+        // usuario. Caso contrario, crearla
         if (!folder.exists()) {
             try {
                 folder_created = folder.mkdirs();
             } catch (SecurityException folder_exc) {
                 // Incluir en la respuesta si es que hubo un mensaje de error
                 exc_cause = String.valueOf(folder_exc.getCause());
+                answer[0] = "false";
                 answer[1] = "%s.%s%s".formatted(folder_error_msg, new_line, exc_cause);
             }
         } else answer[1] = folder_exists_error_msg;
 
-        // Comprobar si ya existe el archivo. Si existe, saltar este bloque y guardar un mensaje de error para el
-        // usuario. Caso contrario, crearlo
+        // Comprobar si ya existe el archivo. Si existe, saltar este bloque y guardar un mensaje para el
+        // usuario. Caso contrario, crearla
         if (!file.exists()) {
             try {
                 file_created = file.createNewFile();
             } catch (SecurityException | IOException file_exc) {
                 // Incluir en la respuesta si es que hubo un mensaje de error
                 exc_cause = String.valueOf(file_exc.getCause());
+                answer[0] = "false";
                 answer[1] = "%s.%s%s%s%s".formatted(answer[1], new_line, file_error_msg, new_line, exc_cause);
             }
         } else answer[1] = "%s.%s%s".formatted(answer[1], new_line, file_exists_error_msg);
 
         // Construir la respuesta. Esta debe incluir si la operación fue exitosa en el primer elemento del array.
         // Si hubo algún mensaje de error, este va en el segundo elemento del array
-        answer[0] = "%s".formatted((folder_created && file_created));
+//        answer[0] = "%s".formatted((folder_created && file_created));
         answer[1] = answer[0].equals("true") ? "%s%s%s".formatted(folder_success_msg, new_line, file_success_msg) : answer[1];
 
         // Retornar la respuesta
@@ -144,7 +146,7 @@ public abstract class Exportador {
 
         // Definir variables de trabajo y respuesta
         String directory = dir_path;
-        file_path = "%s%s%s".formatted(directory, separator, file_name);
+        file_path = file_name;
         File current_file = new File(file_path);
         FileWriter file_writer;
         BufferedWriter file_buffer;
