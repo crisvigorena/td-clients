@@ -1,5 +1,5 @@
 package servicio;
-//Se importan las variables a manipular
+
 import modelo.CategoriaEnum;
 import modelo.Cliente;
 import utilidades.Utilidad;
@@ -8,24 +8,14 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-
-/**
- * Se declara la clase ArchivoServicio que hereda de
- * la clase Exportador
- */
 public class ArchivoServicio extends Exportador {
 
-    /**Se implementa el constructor ArchivoServicio que
-    entrega el valor del String directory a la clase padre
-     */
     public ArchivoServicio(String directory) {
         super(directory);
         delimiter = ",";
     }
 
-    /**Se implementa el metodo readFile que se encarga de leer valores y
-    de retornar un String de nombre answer
-     */
+
     private static String[] readFile(String file_name) {
         // Definir variables de trabajo y respuesta
         String directory = dir_path;

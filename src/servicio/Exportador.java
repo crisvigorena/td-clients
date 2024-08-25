@@ -12,7 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import utilidades.Utilidad;
 
-/**Se crea la clase abstracta Exportador.
+/**
+ * The type Exportador.
  */
 public abstract class Exportador {
 
@@ -25,23 +26,14 @@ public abstract class Exportador {
     ArrayList<Cliente> clientsList;
     static String exc_cause;
 
-    //Se crea el metodo exportador
     public Exportador(String directory) {
         dir_path = directory;
     }
 
-
-    /**Se declara el metodo que setea el directorio para posteriormente
-     * exportar la informacion.
-     */
     public static void setDir_path(String dir_path) {
         Exportador.dir_path = dir_path;
     }
 
-    /**
-     * Se declara el metodo setter para la
-     * lista de clientes
-     */
     public void setClientsList(ArrayList<Cliente> clientsList) {
         this.clientsList = clientsList;
     }
@@ -180,10 +172,8 @@ public abstract class Exportador {
             // Cerrar el archivo
             file_buffer.close();
 
-        }
-        // Si se produce una excepción, preparar un mensaje de error
-        catch (IOException io_exc) {
-
+        } catch (IOException io_exc) {
+            // Si se produce una excepción, preparar un mensaje de error
             answer[0] = "false";
             exc_cause = String.valueOf(io_exc.getCause());
 

@@ -1,6 +1,5 @@
 package servicio;
 
-//Se importan los archivos necesarios
 import modelo.CategoriaEnum;
 import modelo.Cliente;
 
@@ -8,13 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
-//Se declaran la clase ClienteServicio
 public class ClienteServicio {
 
-    /**Se declara la lista Cliente
-     * con una variable listaClientes
-     */
+    // Crear las variables de trabajo
     List<Cliente> listaClientes;
 
 
@@ -43,8 +38,6 @@ public class ClienteServicio {
     public void editarCliente(String runCliente, String nombreCliente, String apellidoCliente,
                    @SuppressWarnings("SpellCheckingInspection") String aniosCliente,
                    @SuppressWarnings("SpellCheckingInspection") CategoriaEnum nombreCategoria) {
-
-        //Iterar sobre la lista cliente y para guardar los datos editados
         for (Cliente record: listaClientes) {
             if (Objects.equals(record.getRunCliente(), runCliente)) {
                 record.setNombreCliente(nombreCliente);
